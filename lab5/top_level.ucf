@@ -1,0 +1,9 @@
+# clock pin for Genesys rev C board
+NET "clk"   LOC = "AG18" | period = 10 ns; # Bank = 4, Pin name = IO_L6P_GC_4, Type = GCLK, Sch name = GCLK0
+
+#  onBoard PUSH BUTTONS 
+NET "reset" LOC = "G6";  # Bank = 12, Pin name = IO_L17P_12,        Sch name = BTN0
+ 
+# RS232 connector1
+NET "rx" LOC = "AG15"; # Bank = 4, Pin name = IO_L5N_GC_4,   Sch name = RS1-RX
+NET "tx" LOC = "AF19"; # Bank = 4, Pin name = IO_L6N_GC_4,   Sch name = RS1-TX
