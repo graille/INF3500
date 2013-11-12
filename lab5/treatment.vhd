@@ -50,7 +50,11 @@ architecture arch of traitement is
 	 signal entree_10 : integer;
 	 signal milliersBCD, centainesBCD, dizainesBCD, unitesBCD : unsigned(7 downto 0);
 	 
-	 type tr_state_type is (idle, entree_rd);
+	 -- signaux pour Fibonacci
+	 signal go: std_logic;
+	 signal sortieValide: std_logic;
+	 
+	 type tr_state_type is (idle, entree_rd, calcul, sortie_rd);
     signal tr_state : tr_state_type := idle;
 	 
 	 component fibonacci is
@@ -136,7 +140,9 @@ begin
 	 
 	 
 	 --instancier le module Fibonacci
-	 
+	 F1: Fibonacci
+	 generic map(w => 16)
+	 port map(clk => clk, reset => reset, go => go, entree => entree, Fn => result_unsigned, sortieValide => sortieValide);
 	 
 	 
 	 --aider:
@@ -154,16 +160,32 @@ begin
 				--à compléter
             else
                 case tr_state is
-                    when idle =>
-						--à compléter
-									
-                    when entree_rd =>
+							when idle =>
+							--à compléter
+							
+							when entree_rd =>
 								ch_temp:= command(i);
 								if (ch_temp=x"00" or ch_temp=x"0D" or i>2) then    -- Fin de la chaîne d'entrée
 									--à compléter
-								else  
+									go <= '1';
+									entree <= entree_temp;
+									tr_state <= calcul;
+									
+								elsif (unsigned(ch_temp) <= 9 and unsigned(ch_temp) >= 0) then
 									--à compléter
-								end if;						
+									entree_temp((i+1)*4 downto (i)*4) <= conv_std_logic_vector(entree_10 + conv_integer(ch_temp));
+								end if;
+							
+							when calcul =>
+								
+								if(resultatValide = '1') then
+									tr_state <= sortie_rd;
+								end if;
+								
+							when sortie_rd =>
+								
+								result <= std_logic_vector(result_unsigned);
+								
                 end case;
             end if;
         end if;
