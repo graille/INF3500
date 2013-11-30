@@ -35,7 +35,7 @@ begin
 	begin
 		if ( rising_edge(clk) ) then
 			if (reset = '1') then
-				fnm1:= to_unsigned(1, W);
+				fnm1 := to_unsigned(1, W);
 				fnm2 := to_unsigned(1, W);
 				Fn_temp := fnm1 + fnm2;
 				fi_state <= idle;
