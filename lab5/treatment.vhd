@@ -149,29 +149,31 @@ begin
 
 	 -- traitement du numéro d'entrée
 	process( clk ) is
-		variable ch_cnt, i: integer:= 0;
+		variable i: integer:= 0;
 		variable ch_temp: std_logic_vector(7 downto 0);
-		variable long_ch : std_logic_vector(15 downto 0):= (others => '0');
 	begin
 		if( rising_edge( clk ) ) then
 			if( reset = '1' ) then
 				tr_state <= idle;
-				--à compléter
+				i := 0;
+				ch_temp := (others => '0');
 			else
 				case tr_state is
 					when idle =>
-					--à compléter
+						if (activate_rd = '1') then
+							i := 0;
+							ch_temp := (others => '0');
+							tr_state <= entree_rd;
+						end if;
 
 					when entree_rd =>
 						ch_temp:= command(i);
 						if (ch_temp=x"00" or ch_temp=x"0D" or i>2) then    -- Fin de la chaîne d'entrée
-							--à compléter
 							go <= '1';
 							entree <= entree_temp;
 							tr_state <= calcul;
 
 						elsif (ch_temp(7 downto 4) = "0011" AND UNSIGNED(ch_temp(3 downto 0)) >= 0 AND UNSIGNED(ch_temp(3 downto 0)) <= 9) then
-							--à compléter
 							entree_temp <= conv_unsigned(entree_10 + conv_integer(ch_temp(3 downto 0)), 16);
 						end if;
 						
@@ -181,6 +183,7 @@ begin
 						end if;
 
 					when sortie_rd =>
+						activate_wr <= '1';
 						result <= std_logic_vector(result_unsigned);
 
 				end case;
