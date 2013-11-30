@@ -35,14 +35,14 @@ begin
 	begin
 		if ( rising_edge(clk) ) then
 			if (reset = '1') then
-				fnm1:= "1";
-				fnm2 := "1";
+				fnm1:= to_unsigned(1, W);
+				fnm2 := to_unsigned(1, W);
 				Fn_temp := fnm1 + fnm2;
 				fi_state <= idle;
 				n := 0;
 				
 				sortieValide <= '0';
-				Fn <= "0";
+				Fn <= to_unsigned(0, W);
 			else
 				case fi_state is
 					when idle =>
