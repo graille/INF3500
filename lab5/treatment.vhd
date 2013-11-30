@@ -131,7 +131,6 @@ begin
 
 	 fifo_in_rd_en <= '1' when ( fifo_in_empty = '0' and rd_state=rd_wait) else '0';
 
-
 	--instancier le module Fibonacci
 	F1: Fibonacci
 	generic map(w => 16)
