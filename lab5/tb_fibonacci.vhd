@@ -32,16 +32,16 @@ architecture meh of tb_fibonacci is
 		generic (
 				W : positive := 16
 			);
-			port(
-				clk, reset, go : in STD_LOGIC;
-				entree : in unsigned(W - 1 downto 0); -- n
-				Fn : out unsigned(W - 1 downto 0);
-				sortieValide : out std_logic
+		port(
+			clk, reset, go : in STD_LOGIC;
+			entree : in unsigned(W - 1 downto 0); -- n
+			Fn : out unsigned(W - 1 downto 0);
+			sortieValide : out std_logic
 			);
 	end component;
 
 begin
-	uut: fibonacci
+	UUT: fibonacci
 	generic map( w => 16 )
 	port map(
 		clk           => clk,
@@ -59,12 +59,13 @@ begin
 			go <= '1';
 			
 			if(sortieValide = '1') then
-				if Fn /= to_unsigned(vecteur_test(n), 16) then
+				assert Fn = to_unsigned(vecteur_test(n), 16)
 					report "Erreur" severity FAILURE;
-				end if;
 				
 				n := n + 1;
 			end if;
 		end loop;
+		assert false
+		report "Fin de la simulation" severity FAILURE;
 	end process;
 end meh;
