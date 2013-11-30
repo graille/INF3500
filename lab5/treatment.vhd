@@ -42,7 +42,7 @@ architecture arch of traitement is
 	signal activate_rd: std_logic;         -- 1 quand une nombre est complètement recieved
 	signal activate_wr: std_logic;         -- pour activer le retour en arrière le résultat via le port COM
 	signal activate_treatment: std_logic;
-	signal entree, entree_temp : std_logic_vector(15 downto 0);  -- valeur d'entrée entré par l'utilisateur. le numéro de l'élément souhaité à la série de Fibonacci
+	signal entree, entree_temp : unsigned(15 downto 0);  -- valeur d'entrée entré par l'utilisateur. le numéro de l'élément souhaité à la série de Fibonacci
 	signal cnt: unsigned(3 downto 0);
 	constant result_message : string := "Result: ";
 	signal result : std_logic_vector(15 downto 0);
@@ -170,9 +170,9 @@ begin
 							entree <= entree_temp;
 							tr_state <= calcul;
 
-						elsif (unsigned(ch_temp) <= 9 and unsigned(ch_temp) >= 0) then
+						elsif (ch_temp(7 downto 4) = "0011" AND UNSIGNED(ch_temp(3 downto 0)) >= 0 AND UNSIGNED(ch_temp(3 downto 0)) <= 9) then
 							--à compléter
-							entree_temp <= conv_std_logic_vector((entree_10 + conv_integer(ch_temp)), 16);
+							entree_temp <= conv_unsigned(entree_10 + conv_integer(ch_temp(3 downto 0)), 16);
 						end if;
 						
 					when calcul =>
