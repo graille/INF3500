@@ -139,7 +139,7 @@ begin
 		clk => clk,
 		reset => reset,
 		go => go,
-		entree => entree,
+		entree => unsigned(entree),
 		Fn => result_unsigned,
 		sortieValide => sortieValide
 	);
@@ -172,11 +172,11 @@ begin
 
 						elsif (unsigned(ch_temp) <= 9 and unsigned(ch_temp) >= 0) then
 							--à compléter
-							entree_temp((i+1)*4 downto (i)*4) <= conv_std_logic_vector(entree_10 + conv_integer(ch_temp));
+							entree_temp <= conv_std_logic_vector((entree_10 + conv_integer(ch_temp)), 16);
 						end if;
 
 					when calcul =>
-						if(resultatValide = '1') then
+						if(sortieValide = '1') then
 							tr_state <= sortie_rd;
 						end if;
 
