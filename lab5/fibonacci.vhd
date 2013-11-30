@@ -27,8 +27,8 @@ signal fi_state : fi_state_type := idle;
 
 begin
 	process( clk, reset )
-	variable fnm1 : unsigned(W - 1 downto 0) := "1";
-	variable fnm2 : unsigned(W - 1 downto 0) := "1";
+	variable fnm1 : unsigned(W - 1 downto 0) := to_unsigned(1, W);
+	variable fnm2 : unsigned(W - 1 downto 0) := to_unsigned(1, W);
 	variable Fn_temp : unsigned(W - 1 downto 0) := fnm1 + fnm2;
 	variable n : integer;
 

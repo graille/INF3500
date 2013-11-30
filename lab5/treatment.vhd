@@ -174,7 +174,7 @@ begin
 							--à compléter
 							entree_temp <= conv_std_logic_vector((entree_10 + conv_integer(ch_temp)), 16);
 						end if;
-
+						
 					when calcul =>
 						if(sortieValide = '1') then
 							tr_state <= sortie_rd;
