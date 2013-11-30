@@ -5,11 +5,9 @@
 --  Inf3500
 ---------------------------------------------------
 
-library ieee;
-use ieee.std_logic_1164.all;
---use ieee.numeric_std.all;
-use IEEE.std_logic_unsigned.all;
-use ieee.std_logic_arith.all;
+library IEEE;
+use IEEE.STD_LOGIC_1164.all;
+use ieee.numeric_std.all;  
 
 entity fibonacci is
 	generic (
@@ -50,7 +48,7 @@ begin
 					when idle =>
 					if (go = '1') then
 						sortieValide <= '0';
-						n := conv_integer(entree);
+						n := to_integer(entree);
 						if (n > 1) then
 							n := 1;
 						end if;
