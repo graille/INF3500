@@ -153,20 +153,23 @@ begin
 				tr_state <= idle;
 				i := 0;
 				go <= '0';
+				
 				ch_temp := (others => '0');
+				entree_temp <= (others => '0');
+				entree <= (others => '0');
 			else
 				case tr_state is
 					when idle =>
+						i := 0;
+						go <= '0';
+						ch_temp := (others => '0');
+						entree_temp <= (others => '0');
+						entree <= (others => '0');
+						
 						if (activate_rd = '1') then
-							
-							result <= x"002A";
-							activate_wr <= '1';
-							
-							i := 0;
-							go <= '0';
-							ch_temp := (others => '0');
 							tr_state <= entree_rd;
 						end if;
+						
 					when entree_rd =>
 						ch_temp:= command(i);
 						if (ch_temp=x"00" or ch_temp=x"0D" or i>2) then    -- Fin de la chaîne d'entrée
