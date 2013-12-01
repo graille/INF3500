@@ -1,5 +1,5 @@
 # clock pin for Genesys rev C board
-NET "clk"   LOC = "AG18" | period = 11 ns; # Bank = 4, Pin name = IO_L6P_GC_4, Type = GCLK, Sch name = GCLK0
+NET "clk"   LOC = "AG18" | period = 12 ns; # Bank = 4, Pin name = IO_L6P_GC_4, Type = GCLK, Sch name = GCLK0
 
 #  onBoard PUSH BUTTONS 
 NET "reset" LOC = "G6";  # Bank = 12, Pin name = IO_L17P_12,        Sch name = BTN0

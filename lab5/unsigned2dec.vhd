@@ -27,7 +27,9 @@ end unsigned2dec;
 
 architecture arch of unsigned2dec is
 begin
+	
 
+	
 	process(nombre)
 --	variable n, c, d, u : natural range 0 to 999 := 0;
 --	variable n, c, d, u : natural range 0 to 1023 := 0;
@@ -70,5 +72,7 @@ begin
 		centainesBCD <= to_unsigned(c, 4);
 		dizainesBCD <= to_unsigned(d, 4);
 		unitesBCD <= to_unsigned(u, 4);
-	end process;
+		
+	end process;	
+	
 end arch;
