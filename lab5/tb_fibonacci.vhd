@@ -9,7 +9,9 @@
 
 library ieee;
 use ieee.std_logic_1164.all;
-use ieee.numeric_std.all;
+--use ieee.numeric_std.all;
+use IEEE.std_logic_unsigned.all;
+use ieee.std_logic_arith.all;
 
 entity tb_fibonacci is
 	port(
@@ -25,7 +27,7 @@ architecture meh of tb_fibonacci is
 	signal Fn : unsigned( 15 downto 0 );
 	signal sortieValide : std_logic;
 	type INT_ARRAY is array (integer range <>) of integer;
-	signal vecteur_test : INT_ARRAY(0 to 9) := (1, 1, 2, 3, 5, 8, 13, 21, 34, 55);
+	signal vecteur_test : INT_ARRAY(1 to 10) := (1, 1, 2, 3, 5, 8, 13, 21, 34, 55);
 	
 	component fibonacci is
 		generic (
@@ -50,20 +52,19 @@ begin
 		Fn            => Fn,
 		sortieValide  => sortieValide
 	);
-	process(clk, reset)
-		variable n : integer := 0;
+	process
+		variable n : integer := 1;
 	begin  
-	--	while(n <= 10) loop
-			entree <= to_unsigned(n, 16);
+		while(n <= 10) loop
+			entree <= conv_unsigned(n, 16);
 			go <= '1';
 			
-			if(sortieValide = '1') then
-				assert Fn = to_unsigned(vecteur_test(n), 16)
-					report "Erreur" severity FAILURE;
-				
-				n := n + 1;
-			end if;
-	--	end loop;
+			wait until sortieValide = '1';
+			
+			assert Fn = conv_unsigned(vecteur_test(n), 16)
+			report "Erreur" severity FAILURE;
+			n := n + 1;
+		end loop;
 		assert false
 		report "Fin de la simulation" severity FAILURE;
 	end process;
