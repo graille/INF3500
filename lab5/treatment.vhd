@@ -77,8 +77,6 @@ architecture arch of traitement is
 		);
 	 end component;
 
-
-
 begin
 
 	milliersBCD(7 downto 4) <= "0011";
@@ -123,28 +121,27 @@ begin
 							cnt <= cnt+1;
 							rd_state <= rd_wait;
 						end if;
-
 				end case;
 			end if;
 		end if;
 	end process;
 
-	 fifo_in_rd_en <= '1' when ( fifo_in_empty = '0' and rd_state=rd_wait) else '0';
+	fifo_in_rd_en <= '1' when ( fifo_in_empty = '0' and rd_state=rd_wait) else '0';
 
 	--instancier le module Fibonacci
-	F1: Fibonacci
-	generic map(w => 16)
+	F1: fibonacci
+	generic map(W => 16)
 	port map(
 		clk => clk,
 		reset => reset,
 		go => go,
-		entree => unsigned(entree),
+		entree => entree,
 		Fn => result_unsigned,
 		sortieValide => sortieValide
 	);
 
 	 --aider:
-	 entree_10 <= conv_integer(entree_temp)*10;
+	entree_10 <= conv_integer(entree_temp)*10;
 
 	 -- traitement du numéro d'entrée
 	process( clk ) is

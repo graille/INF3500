@@ -9,8 +9,9 @@
 
 library ieee;
 use ieee.std_logic_1164.all;
-use ieee.numeric_std.all;
-use ieee.math_real.all;
+--use ieee.numeric_std.all;
+use IEEE.std_logic_unsigned.all;
+use ieee.std_logic_arith.all;
 
 entity tb_fibonacci is
 	port(
@@ -55,11 +56,11 @@ begin
 		variable n : integer := 0;
 	begin  
 		while(n <= 10) loop
-			entree <= to_unsigned(n, 16);
+			entree <= conv_unsigned(n, 16);
 			go <= '1';
 			
 			if(sortieValide = '1') then
-				assert Fn = to_unsigned(vecteur_test(n), 16)
+				assert Fn = conv_unsigned(vecteur_test(n), 16)
 					report "Erreur" severity FAILURE;
 				
 				n := n + 1;

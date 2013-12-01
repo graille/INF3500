@@ -16,7 +16,9 @@
 
 library ieee;
 use ieee.std_logic_1164.all;
-use ieee.numeric_std.all;
+--use ieee.numeric_std.all;
+use IEEE.std_logic_unsigned.all;
+use ieee.std_logic_arith.all;
 
 entity unsigned2dec is
 	port(
@@ -36,7 +38,7 @@ begin
 	variable n, m, c, d, u : natural := 0;
 	begin
 		
-		n := to_integer(nombre);
+		n := conv_integer(nombre);
 		
 		m := 0;
 		for milliers in 9 downto 1 loop
@@ -68,10 +70,10 @@ begin
 		
 		u := n - d * 10;
 		
-		milliersBCD <= to_unsigned(m, 4);
-		centainesBCD <= to_unsigned(c, 4);
-		dizainesBCD <= to_unsigned(d, 4);
-		unitesBCD <= to_unsigned(u, 4);
+		milliersBCD <= conv_unsigned(m, 4);
+		centainesBCD <= conv_unsigned(c, 4);
+		dizainesBCD <= conv_unsigned(d, 4);
+		unitesBCD <= conv_unsigned(u, 4);
 		
 	end process;	
 	
