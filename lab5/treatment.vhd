@@ -8,7 +8,9 @@
 
 library ieee;
 use ieee.std_logic_1164.all;
-use ieee.numeric_std.all;
+--use ieee.numeric_std.all;
+use IEEE.std_logic_unsigned.all;
+use ieee.std_logic_arith.all;
 
 entity traitement is
 	generic (
@@ -108,13 +110,13 @@ begin
 
 					when rd =>
 						if ( din=x"0D" or cnt > 2 ) then     --fin de la chaîne d'entrée
-							command_temp(to_integer(cnt)) <= din;
+							command_temp(conv_integer(cnt)) <= din;
 							cnt <= "0000";
 							rd_state <= idle;
 							activate_rd <= '1';
 							command <= command_temp;
 						else
-							command_temp(to_integer(cnt)) <= din;
+							command_temp(conv_integer(cnt)) <= din;
 							temp <= din;
 							cnt <= cnt+1;
 							rd_state <= rd_wait;
@@ -139,11 +141,11 @@ begin
 	);
 
 	--aider:
-	entree_10 <= to_integer(entree_temp)*10;
+	entree_10 <= conv_integer(entree_temp)*10;
 
 	-- traitement du numéro d'entrée
 	process( clk ) is
-		variable i: integer:= 0;
+		variable i : integer := 0;
 		variable ch_temp: std_logic_vector(7 downto 0);
 	begin
 		if( rising_edge( clk ) ) then
@@ -156,27 +158,30 @@ begin
 				case tr_state is
 					when idle =>
 						if (activate_rd = '1') then
+							
+							result <= x"002A";
+							activate_wr <= '1';
+							
 							i := 0;
 							go <= '0';
 							ch_temp := (others => '0');
 							tr_state <= entree_rd;
 						end if;
-
 					when entree_rd =>
 						ch_temp:= command(i);
 						if (ch_temp=x"00" or ch_temp=x"0D" or i>2) then    -- Fin de la chaîne d'entrée
 							entree <= entree_temp;
 							tr_state <= calcul;
 							go <= '1';
-						elsif (ch_temp(7 downto 4) = "0011" AND UNSIGNED(ch_temp(3 downto 0)) >= 0 AND UNSIGNED(ch_temp(3 downto 0)) <= 9) then
-							entree_temp <= to_unsigned(entree_10 + to_integer(unsigned(ch_temp(3 downto 0))), 16);
+						elsif (ch_temp(7 downto 4) = "0011" AND conv_integer(ch_temp(3 downto 0)) >= 0 AND conv_integer(ch_temp(3 downto 0)) <= 9) then
+							entree_temp <= conv_unsigned(entree_10 + conv_integer(unsigned(ch_temp(3 downto 0))), 16);
 							i := i + 1;
 						end if;
 						
 					when calcul =>
+						go <= '0';
 						if(sortieValide = '1') then
 							tr_state <= sortie_rd;
-							go <= '0';
 						end if;
 
 					when sortie_rd =>
@@ -220,7 +225,7 @@ begin
 								dout <= x"0D";
 							else							 -- envoyer le résultat
 								if cnt2<9 then
-									dout <= std_logic_vector(to_unsigned(character'pos(result_message(cnt2)), 8));
+									dout <= conv_std_logic_vector(character'pos(result_message(cnt2)), 8);
 								elsif cnt2=9 then
 									dout <= std_logic_vector(milliersBCD);
 								elsif cnt2=10 then
