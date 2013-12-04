@@ -73,7 +73,7 @@ signal op : integer range 0 to 7;
 
 -- signaux de l'unité de contrôle
 type type_etat is
-	(depart, querir, decoder, stop, ecrireMemoire, lireMemoire, opUAL, jump, chargeimm16);
+	(depart, querir, decoder, stop, ecrireMemoire, lireMemoire, opUAL, jump, chargeimm16, entrerRegistre, sortirRegistre);
 signal etat : type_etat;
 signal PC : integer range 0 to (2 ** Mi - 1); -- compteur de programme
 signal IR : std_logic_vector(Wi - 1 downto 0); -- registre d'instruction
@@ -132,6 +132,8 @@ begin
 							when "000" => etat <= lireMemoire;
 							when "001" => etat <= ecrireMemoire;
 							when "010" => etat <= chargeImm16;
+							when "101" => etat <= entrerRegistre;
+							when "110" => etat <= sortirRegistre;
 							when "100" => etat <= jump;
 							when "111" => etat <= stop;
 							when others => etat <= stop;
@@ -152,6 +154,12 @@ begin
 				when chargeImm16 =>
 					etat <= querir;
 					PC <= PC + 1;
+				when entrerRegistre =>
+					if (entreeExterneValide = '1') then
+						etat <= querir;
+					end if;
+				when sortirRegistre =>
+					
 				when stop =>
 					etat <= stop;
 				when others =>
@@ -167,16 +175,20 @@ begin
 		choixSource <=
 			0 when opUAL,
 			1 when chargeImm16,
+			2 when entrerRegistre,
 			3 when others;
 	choixCharge <= to_integer(unsigned(IR(11 downto 8)));
 	choixA <= to_integer(unsigned(IR(7 downto 4)));
-	choixB <= to_integer(unsigned(IR(11 downto 8))) when etat = ecrireMemoire else
+	choixB <= to_integer(unsigned(IR(11 downto 8))) when etat = ecrireMemoire OR etat = sortirRegistre else
 		to_integer(unsigned(IR(3 downto 0)));
 	with etat select
 		charge <=
-		'1' when opUAL | lireMemoire | chargeImm16,
+		'1' when opUAL | lireMemoire | chargeImm16 | entrerRegistre,
 		'0' when others;
-	sortieExterneValide <= '0';
+	with etat select
+		sortieExterneValide <= 
+		'1' when sortirRegistre,
+		'0' when others;
 	op <= to_integer(unsigned(IR(14 downto 12)));
 	
 	-- UAL
