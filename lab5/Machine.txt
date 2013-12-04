@@ -11,26 +11,17 @@
 10 -	0000
 11 -	AD00
 12 -	0001
-
 13 -	1F30
-14 -	C
-
-MuhLoop :
-15 -	0 - 4 -> 15
-16 -	JUMP IF ZERO 24
-17 -	2 + 14 -> 1
-18 -	3 + 14 -> 2
-19 -	1 + 2 -> 3
-	
-20 -	4 + 13 -> 4
-
-21 -	JUMP 15
-	
-EasyMode :
-22 -	sortieRegistre FROM 0
-23 - 	JUMP 26
-NotSoEasyMode
-24 - 	sortieRegistre FROM 3
-25 - 	JUMP 26
-END :
-26 - 	NOP
+14 - 	C416
+15 -	1F04
+16 -	C118
+17 -	012E
+18 -	023E
+19 -	0312
+20 -	044D
+21 -	C00F
+22 -	D000
+23 - 	C01A
+24 - 	D300
+25 - 	C026
+26 - 	0000
