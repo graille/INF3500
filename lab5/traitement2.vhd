@@ -45,7 +45,7 @@ architecture arch of traitement is
 	signal entree_temp : unsigned(15 downto 0);
 	signal cnt: unsigned(3 downto 0);
 	constant result_message : string := "Result: ";
-	signal result : unsigned(15 downto 0);
+	signal result_signed : signed(15 downto 0);
 	signal entree_10 : integer;
 	signal milliersBCD, centainesBCD, dizainesBCD, unitesBCD : unsigned(7 downto 0);
 
@@ -55,16 +55,23 @@ architecture arch of traitement is
 	type tr_state_type is (idle, entree_rd);
     signal tr_state : tr_state_type := idle;
 
-	component fibonacci is
-		generic (
-			W : positive := 16
-		);
-		port(
-			clk, reset, go : in STD_LOGIC;
-			entree : in unsigned(W - 1 downto 0);
-			Fn : out unsigned(W - 1 downto 0);
-			sortieValide : out std_logic
-		);
+	component processeurv19a is
+	generic (
+		Nreg : integer := 16; -- nombre de registres
+		Wd : integer := 16; -- largeur du chemin des données en bits
+		Wi : integer := 16; -- largeur des instructions en bits
+		Mi : integer := 8; -- nombre de bits d'adresse de la mémoire d'instructions
+		Md : integer := 8; -- nombre de bits d'adresse de la mémoire des données
+		resetvalue : std_logic := '1'
+	);
+	port(
+		reset : in std_logic;
+		CLK : in std_logic;
+		entreeExterne : in signed(Wd - 1 downto 0);
+		entreeExterneValide : in std_logic;
+		sortieExterne : out signed(Wd - 1 downto 0);
+		sortieExterneValide : out std_logic
+	);
 	end component;
 
 	component unsigned2dec is
@@ -123,16 +130,15 @@ begin
 
 	fifo_in_rd_en <= '1' when ( fifo_in_empty = '0' and rd_state=rd_wait) else '0';
 
-	--instancier le module Fibonacci
-	F1: fibonacci
-	generic map(W => 16)
+	--instancier le module processeur
+	F1: processeurv19a
 	port map(
-		clk => clk,
-		reset => reset,
-		go => go,
-		entree => entree,
-		Fn => result,
-		sortieValide => activate_wr
+		CLK                 => clk,
+		reset               => reset,
+		entreeExterne       => signed(entree),
+		entreeExterneValide => go,
+		sortieExterne       => result_signed,
+		sortieExterneValide => activate_wr
 	);
 
 	--aider:
@@ -181,11 +187,11 @@ begin
     end process;
 
 	BCD:unsigned2dec port map(
-				nombre 			=> result,
+				nombre 		   => unsigned(result),
 				milliersBCD    => milliersBCD(3 downto 0),
-				centainesBCD 	=> centainesBCD(3 downto 0),
-				dizainesBCD 	=> dizainesBCD(3 downto 0),
-				unitesBCD 		=> unitesBCD(3 downto 0)
+				centainesBCD   => centainesBCD(3 downto 0),
+				dizainesBCD    => dizainesBCD(3 downto 0),
+				unitesBCD 	   => unitesBCD(3 downto 0)
 			);
 	 
 	 -- renvoyer le résultat à l'ordinateur
