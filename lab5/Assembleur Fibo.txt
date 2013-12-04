@@ -23,11 +23,11 @@ Trash = 15
 12 - 	DANS 13
 
 13 - 3 - 0 (2-n) -> 15
-14 - JUMP ON POSITIVE 22
+14 - JUMP ON POSITIVE --> EasyMode
 
 MuhLoop :
 15 -	0 - 4 -> 15
-16 -	JUMP IF ZERO 24
+16 -	JUMP IF ZERO --> NotSoEasyMode
 17 -	2 + 14 -> 1
 18 -	3 + 14 -> 2
 19 -	1 + 2 -> 3
@@ -38,9 +38,9 @@ MuhLoop :
 	
 EasyMode :
 22 -	sortieRegistre FROM 0
-23 - 	JUMP 26
+23 - 	JUMP --> END
 NotSoEasyMode
 24 - 	sortieRegistre FROM 3
-25 - 	JUMP 26
+25 - 	JUMP --> END
 END :
 26 - 	NOP

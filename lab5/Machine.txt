@@ -1,0 +1,36 @@
+0 - 	D000
+1 - 	A100
+2 - 	0001
+3 - 	A200
+4 - 	0001
+5 - 	A300
+6 - 	0002
+7 - 	A400
+8 - 	0002
+9 - 	AE00
+10 -	0000
+11 -	AD00
+12 -	0001
+
+13 -	1F30
+14 -	C
+
+MuhLoop :
+15 -	0 - 4 -> 15
+16 -	JUMP IF ZERO 24
+17 -	2 + 14 -> 1
+18 -	3 + 14 -> 2
+19 -	1 + 2 -> 3
+	
+20 -	4 + 13 -> 4
+
+21 -	JUMP 15
+	
+EasyMode :
+22 -	sortieRegistre FROM 0
+23 - 	JUMP 26
+NotSoEasyMode
+24 - 	sortieRegistre FROM 3
+25 - 	JUMP 26
+END :
+26 - 	NOP
