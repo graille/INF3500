@@ -59,7 +59,7 @@ end uart_tx;
 
 architecture behavioral of uart_tx is
 
-   constant clk_freq : real := real( 100000000 );
+   constant clk_freq : real := real( 83333333,333333333333333333333333 );
    constant baud_rate : real := real( comm_baud_rate );
    
    constant divisor : unsigned(15 downto 0) := to_unsigned(integer(round(clk_freq/baud_rate))-1, 16);
