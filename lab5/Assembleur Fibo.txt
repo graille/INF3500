@@ -1,0 +1,40 @@
+N = 0
+Fmn1 = 1
+Fnm2 = 2
+Fn = 3
+Compteur = 4
+
+Uno = 13
+Zero = 14
+Trash = 15
+
+0 - entreeRegistre INTO 0
+1 - LDR 1 DANS 1
+2 - LDR 1 DANS 2
+3 - LDR 2 DANS 3
+4 - LDR 2 DANS 4
+5 - LDR 0 DANS 14
+6 - LDR 1 DANS 13
+
+7 - 3 - 0 (2-n) -> 15
+8 - JUMP ON POSITIVE --> 16
+
+MuhLoop :
+9 - 	0 - 4 -> 15
+10 - 	JUMP IF 0 --> 18
+11 - 	2 + 14 -> 1
+12 - 	3 + 14 -> 2
+13 - 	1 + 2 -> 3
+	
+14 - 	4 + 13 -> 4
+
+15 - 	JUMP --> 9
+	
+EasyMode :
+16 - 	sortieRegistre FROM 0
+17 - 	JUMP --> 20
+NotSoEasyMode
+18 - 	sortieRegistre FROM 3
+19 - 	JUMP --> 20
+END :
+20 - 	NOP
