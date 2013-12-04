@@ -60,11 +60,14 @@ begin
 			go <= '1';
 			
 			wait until sortieValide = '1';
+			go <= '0';
 			
 			assert Fn = conv_unsigned(vecteur_test(n), 16)
 			report "Erreur" severity FAILURE;
+			
 			n := n + 1;
 		end loop;
+		
 		assert false
 		report "Fin de la simulation" severity FAILURE;
 	end process;
