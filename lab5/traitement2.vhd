@@ -11,7 +11,7 @@ use ieee.std_logic_1164.all;
 use IEEE.std_logic_unsigned.all;
 use ieee.std_logic_arith.all;
 
-entity traitement is
+entity traitement2 is
     generic (
         N : positive := 1024
     );
@@ -25,9 +25,9 @@ entity traitement is
         fifo_out_full  : in  std_logic;
         fifo_out_wr_en : out std_logic
     );
-end traitement;
+end traitement2;
 
-architecture arch of traitement is
+architecture arch of traitement2 is
 
     -- COMPONENTS DECLARATION
     type rd_state_type is (idle, rd_wait, rd);
@@ -187,7 +187,7 @@ begin
     end process;
 
 	BCD:unsigned2dec port map(
-				nombre 		   => unsigned(result),
+				nombre 		   => unsigned(result_signed),
 				milliersBCD    => milliersBCD(3 downto 0),
 				centainesBCD   => centainesBCD(3 downto 0),
 				dizainesBCD    => dizainesBCD(3 downto 0),

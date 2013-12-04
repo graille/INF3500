@@ -57,7 +57,7 @@ begin
 	);
 	process
 		variable n : integer := 1;
-	begin  
+	begin
 		while(n <= 12) loop
 			entreeExterne <= to_signed(n-1, 16);
 			entreeExterneValide <= '1';
