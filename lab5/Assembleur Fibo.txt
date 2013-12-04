@@ -8,33 +8,33 @@ Uno = 13
 Zero = 14
 Trash = 15
 
-0 - entreeRegistre INTO 0
-1 - LDR 1 DANS 1
-2 - LDR 1 DANS 2
-3 - LDR 2 DANS 3
-4 - LDR 2 DANS 4
-5 - LDR 0 DANS 14
-6 - LDR 1 DANS 13
+entreeRegistre INTO 0
+LDR 1 DANS 1
+LDR 1 DANS 2
+LDR 2 DANS 3
+LDR 2 DANS 4
+LDR 0 DANS 14
+LDR 1 DANS 13
 
-7 - 3 - 0 (2-n) -> 15
-8 - JUMP ON POSITIVE --> 16
+3 - 0 (2-n) -> 15
+JUMP ON POSITIVE EasyMode
 
 MuhLoop :
-9 - 	0 - 4 -> 15
-10 - 	JUMP IF 0 --> 18
-11 - 	2 + 14 -> 1
-12 - 	3 + 14 -> 2
-13 - 	1 + 2 -> 3
+ 	0 - 4 -> 15
+ 	JUMP IF ZERO NotSoEasyMode
+	2 + 14 -> 1
+ 	3 + 14 -> 2
+ 	1 + 2 -> 3
 	
-14 - 	4 + 13 -> 4
+ 	4 + 13 -> 4
 
-15 - 	JUMP --> 9
+ 	JUMP MuhLoop
 	
 EasyMode :
-16 - 	sortieRegistre FROM 0
-17 - 	JUMP --> 20
+ 	sortieRegistre FROM 0
+ 	JUMP END
 NotSoEasyMode
-18 - 	sortieRegistre FROM 3
-19 - 	JUMP --> 20
+ 	sortieRegistre FROM 3
+ 	JUMP END
 END :
-20 - 	NOP
+	NOP
