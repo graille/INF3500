@@ -9,11 +9,11 @@ Zero = 14
 Trash = 15
 
 0 - entreeRegistre INTO 0
-1 - LDR 1
+1 - LDR 0
 2 - 	DANS 1
 3 - LDR 1
 4 - 	DANS 2
-5 - LDR 2
+5 - LDR 1
 6 - 	DANS 3
 7 - LDR 2
 8 - 	DANS 4
@@ -22,7 +22,7 @@ Trash = 15
 11 - LDR 1
 12 - 	DANS 13
 
-13 - 3 - 0 (2-n) -> 15
+13 - 13 - 0 (1-n) -> 15
 14 - JUMP ON POSITIVE --> EasyMode
 
 MuhLoop :

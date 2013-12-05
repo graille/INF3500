@@ -24,7 +24,7 @@ architecture tb_assembleur of tb_fibonacci_ass is
 	signal sortieExterne : signed(15 downto 0);
 	signal sortieExterneValide : std_logic;
 	type INT_ARRAY is array (integer range <>) of integer;
-	signal vecteur_test : INT_ARRAY(1 to 11) := (0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55);
+	signal vecteur_test : INT_ARRAY(0 to 10) := (0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55);
 
 component processeurv19a is
 	generic (
@@ -56,14 +56,15 @@ begin
 		sortieExterneValide => sortieExterneValide
 	);
 	process
-		variable n : integer := 1;
+		variable n : integer := 0;
 	begin
-		while(n <= 12) loop
-			entreeExterne <= to_signed(n-1, 16);
+		while(n <= 10) loop
+			entreeExterne <= to_signed(n, 16);
 			entreeExterneValide <= '1';
 			
 			wait until sortieExterneValide = '1';
 			entreeExterneValide <= '0';
+			wait for 1 ns;			
 			
 			assert sortieExterne = to_signed(vecteur_test(n), 16)
 			report "Erreur" severity FAILURE;
