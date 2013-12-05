@@ -43,4 +43,4 @@ NotSoEasyMode
 24 - 	sortieRegistre FROM 3
 25 - 	JUMP --> END
 END :
-26 - 	NOP
+26 - 	JUMP --> 0

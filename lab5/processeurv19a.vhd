@@ -164,7 +164,7 @@ begin
 						etat <= querir;
 					end if;
 				when sortirRegistre =>
-					
+					etat <= querir;
 				when stop =>
 					etat <= stop;
 				when others =>
