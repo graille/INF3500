@@ -45,8 +45,8 @@ constant memoireInstructions : memoireInstructions_type :=
 --	(x"D700", x"DC00", x"137C", x"E300", others => (others => '1')); -- Test des nouvelles instructions
 	(x"D000", x"A100", x"0001", x"A200", x"0001", x"A300", x"0002", x"A400",
 	 x"0002", x"AE00", x"0000", x"AD00", x"0001", x"1F30", x"C416", x"1F04",
-	 x"C118", x"012E", x"023E", x"0312", x"044D", x"C00F", x"D000", x"C01A",
-	 x"D300", x"C026", x"1111", others => (others => '1'));
+	 x"C118", x"012E", x"023E", x"0312", x"044D", x"C00F", x"E000", x"C01A",
+	 x"E300", x"C026", x"1111", others => (others => '1'));
 
 -- signaux de la mémoire des données
 type memoireDonnees_type is array(0 to 2 ** Md - 1) of signed(Wd - 1 downto 0);
